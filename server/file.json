@@ -1,0 +1,123 @@
+{
+    "admins": [
+        {
+            "key": "admin",
+            "name": "admin",
+            "pass": "admin"
+        }
+    ],
+    "songs": [
+        {
+            "descriere": "aha",
+            "genuri": {
+                "gen": [
+                    "manele",
+                    "viata",
+                    "toate"
+                ]
+            },
+            "link": "da",
+            "name": "susanu",
+            "numar de voturi": 3
+        },
+        {
+            "descriere": "de",
+            "genuri": {
+                "gen": [
+                    "da"
+                ]
+            },
+            "link": "da",
+            "name": "da",
+            "numar de voturi": 9
+        },
+        {
+            "comentarii": "-",
+            "descriere": "macarenaaaaaaaaaaa",
+            "genuri": {
+                "gen": [
+                    "macarena"
+                ]
+            },
+            "link": "da",
+            "name": "macarena",
+            "numar de voturi": 10
+        },
+        {
+            "comentarii": "-",
+            "descriere": "faina",
+            "genuri": {
+                "gen": [
+                    "populara",
+                    "traditonala"
+                ]
+            },
+            "link": "da",
+            "name": "brasoveanca",
+            "numar de voturi": 0
+        },
+        {
+            "comentarii": "-",
+            "descriere": "dsasd",
+            "link": "dasasd",
+            "name": "deas",
+            "numar de voturi": 0
+        },
+        {
+            "comentarii": "-",
+            "descriere": "sdasda",
+            "link": "dsadsaasd",
+            "name": "madassad",
+            "numar de voturi": 0
+        },
+        {
+            "comentarii": "-",
+            "descriere": "assda",
+            "link": "asdsad",
+            "name": "asdsa",
+            "numar de voturi": 0
+        }
+    ],
+    "users": [
+        {
+            "drept de vot": 1,
+            "name": "dadassda",
+            "pass": "dasdsadas"
+        },
+        {
+            "drept de vot": 1,
+            "name": "user",
+            "pass": "user"
+        },
+        {
+            "drept de vot": 1,
+            "name": "dar",
+            "pass": "dar"
+        },
+        {
+            "drept de vot": 1,
+            "name": "nic",
+            "pass": "noce"
+        },
+        {
+            "drept de vot": 1,
+            "name": "bixi",
+            "pass": "bum"
+        },
+        {
+            "drept de vot": 1,
+            "name": "bixos",
+            "pass": "bids"
+        },
+        {
+            "drept de vot": 1,
+            "name": "1",
+            "pass": "user"
+        },
+        {
+            "drept de vot": 1,
+            "name": "1",
+            "pass": "1"
+        }
+    ]
+}
