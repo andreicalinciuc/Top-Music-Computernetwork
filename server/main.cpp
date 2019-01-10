@@ -22,7 +22,7 @@
 #include <pthread.h>
 #include <iostream>
 #include <fstream>
-#include "../Communication/CommunicationHelper.h"
+#include "../Tools/Write&Read.h"
 #include "json.hpp"
 #include <fstream>
 #include <iomanip>
@@ -56,7 +56,6 @@ void selectionSort(musics Vector[], int N) {
         }
     }
 }
-
 
 
 static void *treat(void *); /* functia executata de fiecare thread ce realizeaza comunicarea cu clientii */
@@ -143,7 +142,9 @@ static void *treat(void *arg) {
     fflush(stdout);
     pthread_detach(pthread_self());
 
+
     raspunde((struct thData *) arg);
+
 
     /* am terminat cu acest client, inchidem conexiunea */
 
@@ -294,9 +295,7 @@ void raspunde(void *arg) {
                         for (auto logi:login["users"]) {
                             string usersname = logi["name"];
                             string password = logi["pass"];
-                            cout << usersname << " " << password << endl;
                             if (pass == password && name == usersname) {
-                                cout << "gasit" << endl;
                                 ok = "1";
                                 break;
                             }
@@ -306,7 +305,7 @@ void raspunde(void *arg) {
                         break;
 
                     }
-                    case 2: {
+                    case 2: { //top
                         mu.lock();
                         ifstream file("../file.json");
                         json login = json::parse(file);
@@ -315,21 +314,63 @@ void raspunde(void *arg) {
 
                             music[j].name = musc["name"];
                             music[j].nr_vot = musc["numar de voturi"];
-                            cout<<musc["genuri"]["gen"];
                             j++;
                         }
 
 
                         selectionSort(music, j);
-                        cout<<j<<" dass "<<endl;
-                        write(tdL.cl,&j, sizeof(j));
-                        cout<<j<<" bss "<<endl;
+                        write(tdL.cl, &j, sizeof(j));
 
-                        for (int x = 0; x <j; x++) {
-                            cout << music[x].name << endl;
-                            cout << music[x].nr_vot << endl;
-                            Write(tdL.cl,music[x].name);
-                            write(tdL.cl,&music[x].nr_vot, sizeof(music[x].nr_vot));
+                        for (int x = 0; x < j; x++) {
+                            Write(tdL.cl, music[x].name);
+                            write(tdL.cl, &music[x].nr_vot, sizeof(music[x].nr_vot));
+                        }
+                        mu.unlock();
+                        break;
+                    }
+
+
+                    case 3: {  //top gen
+                        mu.lock();
+                        ifstream file("../file.json");
+                        json login = json::parse(file);
+                        int j = 0;
+                        char gen_recive[1024] = "\0";
+                        if (read(tdL.cl, &size_recive, sizeof(size_recive)) <= 0) {
+                            printf("[Thread %d]\n", tdL.idThread);
+                            perror("Eroare la read() de la dimesiune la Inregistrare-key\n");
+                            break;
+
+                        }
+                        bzero(&gen_recive, size_recive + 1);
+
+                        if (read(tdL.cl, &gen_recive, size_recive) <= 0) {
+                            printf("[Thread %d]\n", tdL.idThread);
+                            perror("Eroare la read() de la client.\n");
+                            break;
+
+                        }
+                        for (auto musc:login["songs"]) {
+
+                            int size_gen;
+                            size_gen = musc["genuri"]["gen"].size();
+                            for (int i = 0; i < size_gen; i++) {
+                                if (musc["genuri"]["gen"][i] == gen_recive) {
+                                    music[j].name = musc["name"];
+                                    music[j].nr_vot = musc["numar de voturi"];
+                                    j++;
+                                }
+                            }
+
+                        }
+
+
+                        selectionSort(music, j);
+                        write(tdL.cl, &j, sizeof(j));
+
+                        for (int x = 0; x < j; x++) {
+                            Write(tdL.cl, music[x].name);
+                            write(tdL.cl, &music[x].nr_vot, sizeof(music[x].nr_vot));
                         }
                         mu.unlock();
                         break;
@@ -367,7 +408,6 @@ void raspunde(void *arg) {
                         cout << i << endl;
                         string votat = "0";
                         for (int i = 0; i < j; i++) {
-                            cout << login["songs"][i]["name"] << endl;
                             if (login["songs"][i]["name"] == name_song) {
                                 int x = login["songs"][i]["numar de voturi"];
                                 x++;
@@ -380,15 +420,162 @@ void raspunde(void *arg) {
                         ofstream o("../file.json");
                         o << setw(4) << login << endl;
                         mu.unlock();
-
                         Write(tdL.cl, votat);
                         break;
 
 
                     }
+                    case 6 : {
+                        char name_song[1024] = "\0";
+                        char commentariu[1024] = "\0";
+
+                        if (read(tdL.cl, &size_recive, sizeof(size_recive)) <= 0) {
+                            printf("[Thread %d]\n", tdL.idThread);
+                            perror("Eroare la read() de la dimesiune la Inregistrare-name\n");
+                            break;
+
+                        }
+                        bzero(&name_song, size_recive + 1);
+
+                        if (read(tdL.cl, &name_song, size_recive) <= 0) {
+                            printf("[Thread %d]\n", tdL.idThread);
+                            perror("Eroare la read() de la client.\n");
+                            break;
+
+                        }
+
+                        if (read(tdL.cl, &size_recive, sizeof(size_recive)) <= 0) {
+                            printf("[Thread %d]\n", tdL.idThread);
+                            perror("Eroare la read() de la dimesiune la Inregistrare-pass\n");
+                            break;
+
+                        }
+                        bzero(&commentariu, size_recive + 1);
+
+                        if (read(tdL.cl, &commentariu, size_recive) <= 0) {
+                            printf("[Thread %d]\n", tdL.idThread);
+                            perror("Eroare la read() de la client.\n");
+                            break;
+
+                        }
+                        cout << commentariu << endl;
+
+                        mu.lock();
+
+                        ifstream file("../file.json");
+                        json songs = json::parse(file);
+                        json q;
+                        int j = songs["songs"].size();
+                        cout << j << endl;
+                        for (int x = 0; x < j; x++) {
+                            if (songs["songs"][x]["name"] == name_song) {
+
+                                songs["songs"][x]["comentariu"].push_back(commentariu);
+                                cout << songs["songs"][x]["comentariu"] << endl;
+
+                            }
+
+                        }
+                        ofstream o("../file.json");
+                        o << setw(4) << songs << endl;
+                        mu.unlock();
+                        break;
+
+                    }
+
+                    case 7: { //search song
+                        string name_song;
+                        string link_youtube;
+                        string gen;
+                        string descriere;
+                        string nr_gen;
+                        string comm;
+                        char name_song_search[1024];
+                        string comentarii;
+                        int numar_vot = 0;
+
+                        if (read(tdL.cl, &size_recive, sizeof(size_recive)) <= 0) {
+                            printf("[Thread %d]\n", tdL.idThread);
+                            perror("Eroare la read() de la dimesiune -nume melodie\n");
+                            break;
+
+                        }
+                        bzero(name_song_search, size_recive + 1);
+
+                        if (read(tdL.cl, name_song_search, size_recive) <= 0) {
+                            printf("[Thread %d]\n", tdL.idThread);
+                            perror("Eroare la read() de la client.\n");
+                            break;
+
+                        }
+
+                        ifstream file("../file.json");
+                        json song = json::parse(file);
+                        int j = song["songs"].size();
+                        for (int x = 0; x < j; x++) {
+                            if (song["songs"][x]["name"] == name_song_search) {
+                                name_song = song["songs"][x]["name"];
+                                Write(tdL.cl, name_song);
+
+                                descriere = song["songs"][x]["descriere"];
+                                Write(tdL.cl, descriere);
+
+
+                                link_youtube = song["songs"][x]["link"];
+                                Write(tdL.cl, link_youtube);
+
+
+                                numar_vot = song["songs"][x]["numar de voturi"];
+                                write(tdL.cl, &numar_vot, sizeof(numar_vot));
+                                cout << song["songs"][x]["comentariu"].size()<<endl;
+                                cout << song["songs"][x]["comentariu"]<<endl;
+
+                                int nr_com=song["songs"][x]["comentariu"].size();
+                                write(tdL.cl,&nr_com, sizeof(nr_com));
+                                for (int i = 0; i < nr_com; i++) {
+                                    comm=song["songs"][x]["comentariu"][i];
+                                    cout<<comm<<endl;
+                                    Write(tdL.cl,comm);
+
+                                }
+
+
+
+                                int nr_gen = song["songs"][x]["genuri"]["gen"].size();
+                                write(tdL.cl, &nr_gen, sizeof(nr_gen));
+                                for (int i = 0; i < nr_gen; i++) {
+                                    gen = song["songs"][x]["genuri"]["gen"][i];
+                                    Write(tdL.cl, gen);
+
+                                }
+
+
+                            }
+
+                        }
+
+
+                        break;
+                    }
 
                     case 8: //deconectare
                         goto citireusr;
+
+
+                    case 9: {
+                        ifstream file("../file.json");
+                        json login = json::parse(file);
+                        string usr, pre;
+                        int i = login["songs"].size();
+                        write(tdL.cl, &i, sizeof(i));
+                        for (auto logi:login["songs"]) {
+                            pre = logi["name"];
+                            Write(tdL.cl, pre);
+
+                        }
+
+                        break;
+                    }
                     default:
                         break;
                 }
@@ -404,7 +591,6 @@ void raspunde(void *arg) {
 
             while (1) {
                 size_recive = 0;
-                size_send = 0;
 
                 using json = nlohmann::json;
                 ifstream file("../file.json");
@@ -553,11 +739,8 @@ void raspunde(void *arg) {
                             string usersname = logi["name"];
                             string password = logi["pass"];
                             string keys = logi["key"];
-                            cout << usersname << " " << password << " " << keys << endl;
-                            cout << name << " " << pass << " " << key << endl << endl;
                             if (pass == password && name == usersname) {
                                 if (key == keys) {
-                                    cout << "gasit" << endl;
                                     ok = "1";
                                     break;
                                 }
@@ -571,7 +754,7 @@ void raspunde(void *arg) {
 
                     }
 
-                    case 2:{
+                    case 2: { // top
                         mu.lock();
                         ifstream file("../file.json");
                         json login = json::parse(file);
@@ -580,51 +763,65 @@ void raspunde(void *arg) {
 
                             music[j].name = musc["name"];
                             music[j].nr_vot = musc["numar de voturi"];
-                            cout<<musc["genuri"]["gen"];
                             j++;
                         }
 
 
                         selectionSort(music, j);
-                        cout<<j<<" dass "<<endl;
-                        write(tdL.cl,&j, sizeof(j));
-                        cout<<j<<" bss "<<endl;
+                        write(tdL.cl, &j, sizeof(j));
 
-                        for (int x = 0; x <j; x++) {
-                            cout << music[x].name << endl;
-                            cout << music[x].nr_vot << endl;
-                            Write(tdL.cl,music[x].name);
-                            write(tdL.cl,&music[x].nr_vot, sizeof(music[x].nr_vot));
+                        for (int x = 0; x < j; x++) {
+                            Write(tdL.cl, music[x].name);
+                            write(tdL.cl, &music[x].nr_vot, sizeof(music[x].nr_vot));
                         }
                         mu.unlock();
                         break;
                     }
 
 
-
                     case 3: {
-
+                        mu.lock();
                         ifstream file("../file.json");
                         json login = json::parse(file);
-
                         int j = 0;
+                        char gen_recive[1024] = "\0";
+                        if (read(tdL.cl, &size_recive, sizeof(size_recive)) <= 0) {
+                            printf("[Thread %d]\n", tdL.idThread);
+                            perror("Eroare la read() de la dimesiune la Inregistrare-key\n");
+                            break;
+
+                        }
+                        bzero(&gen_recive, size_recive + 1);
+
+                        if (read(tdL.cl, &gen_recive, size_recive) <= 0) {
+                            printf("[Thread %d]\n", tdL.idThread);
+                            perror("Eroare la read() de la client.\n");
+                            break;
+
+                        }
                         for (auto musc:login["songs"]) {
 
-                            music[j].name = musc["name"];
-                            music[j].nr_vot = musc["numar de voturi"];
-                            cout<<musc["genuri"]["gen"];
-                            j++;
+                            int size_gen;
+                            size_gen = musc["genuri"]["gen"].size();
+                            for (int i = 0; i < size_gen; i++) {
+                                if (musc["genuri"]["gen"][i] == gen_recive) {
+                                    music[j].name = musc["name"];
+                                    music[j].nr_vot = musc["numar de voturi"];
+                                    j++;
+                                }
+                            }
+
                         }
+
 
                         selectionSort(music, j);
-                        for (int x = 0; x <= j; x++) {
-                            cout << endl;
-                            cout << music[x].name << endl;
-                            cout << music[x].nr_vot << endl;
-                            cout<<  music[j].gen<<endl;
-                        }
-                        break;
+                        write(tdL.cl, &j, sizeof(j));
 
+                        for (int x = 0; x < j; x++) {
+                            Write(tdL.cl, music[x].name);
+                            write(tdL.cl, &music[x].nr_vot, sizeof(music[x].nr_vot));
+                        }
+                        mu.unlock();
                         break;
                     }
 
@@ -635,11 +832,78 @@ void raspunde(void *arg) {
                     }
 
                     case 5: {
+                        char mute_usr[1024] = "\0";
+                        if (read(tdL.cl, &size_recive, sizeof(size_recive)) <= 0) {
+                            printf("[Thread %d]\n", tdL.idThread);
+                            perror("Eroare la read() de la dimesiune la mute\n");
+                            break;
+
+                        }
+                        bzero(&mute_usr, size_recive + 1);
+
+                        if (read(tdL.cl, &mute_usr, size_recive) <= 0) {
+                            printf("[Thread %d]\n", tdL.idThread);
+                            perror("Eroare la read() de la client.\n");
+                            break;
+
+                        }
+                        cout << mute_usr << endl;
+                        mu.lock();
+
+                        ifstream file("../file.json");
+                        json user = json::parse(file);
+                        int j = user["users"].size();
+                        for (int x = 0; x < j; x++) {
+                            if (user["users"][x]["name"] == mute_usr) {
+                                cout << "am dat mute la " << user["users"][x]["name"] << endl;
+                                user["users"][x]["drept de vot"] = 0;
+
+                            }
+
+                        }
+                        ofstream o("../file.json");
+                        o << setw(4) << user << endl;
+                        mu.unlock();
+
 
                         break;
                     }
 
                     case 6: {
+                        char mute_usr[1024] = "\0";
+                        if (read(tdL.cl, &size_recive, sizeof(size_recive)) <= 0) {
+                            printf("[Thread %d]\n", tdL.idThread);
+                            perror("Eroare la read() de la dimesiune la mute\n");
+                            break;
+
+                        }
+                        bzero(&mute_usr, size_recive + 1);
+
+                        if (read(tdL.cl, mute_usr, size_recive) <= 0) {
+                            printf("[Thread %d]\n", tdL.idThread);
+                            perror("Eroare la read() de la client.\n");
+                            break;
+
+                        }
+                        cout << mute_usr << endl;
+                        mu.lock();
+
+                        ifstream file("../file.json");
+                        json user = json::parse(file);
+                        int j = user["users"].size();
+                        for (int x = 0; x < j; x++) {
+                            if (user["users"][x]["name"] == mute_usr) {
+                                cout << "am dat unmute la " << user["users"][x]["name"] << endl;
+                                user["users"][x]["drept de vot"] = 1;
+
+
+                            }
+
+                        }
+                        ofstream o("../file.json");
+                        o << setw(4) << user << endl;
+                        mu.unlock();
+
 
                         break;
                     }
@@ -774,10 +1038,45 @@ void raspunde(void *arg) {
                     case 9: {
                         goto citireusr;
                     }
+                    case 10: {
+                        char mute_usr[1024] = "\0";
+                        if (read(tdL.cl, &size_recive, sizeof(size_recive)) <= 0) {
+                            printf("[Thread %d]\n", tdL.idThread);
+                            perror("Eroare la read() de la dimesiune la mute\n");
+                            break;
+
+                        }
+                        bzero(&mute_usr, size_recive + 1);
+
+                        if (read(tdL.cl, mute_usr, size_recive) <= 0) {
+                            printf("[Thread %d]\n", tdL.idThread);
+                            perror("Eroare la read() de la client.\n");
+                            break;
+
+                        }
+                        mu.lock();
+
+                        ifstream file("../file.json");
+                        json user = json::parse(file);
+                        int j = user["users"].size();
+                        for (int x = 0; x < j; x++) {
+                            if (user["users"][x]["name"] == mute_usr) {
+                                cout << "Threadul [" << tdL.idThread << "] " << "a sters pe "<< user["users"][x]["name"] << endl;
+                                user["users"].erase(x);
+                            }
+
+                        }
+                        ofstream o("../file.json");
+                        o << setw(4) << user << endl;
+                        mu.unlock();
+
+
+                        break;
+                    }
                     default:
                         break;
                 }
-                if (comanda == 4 || comanda ==15)
+                if (comanda == 4 || comanda == 15)
                     break;
 
             }

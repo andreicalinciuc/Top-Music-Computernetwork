@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/andrei/Desktop/computernetwork/Communication/CommunicationHelper.h
+/home/andrei/Desktop/ProjectCN/Tools/Write&Read.h
 unistd.h
 -
 string
@@ -14,7 +14,7 @@ string
 vector
 -
 
-/home/andrei/Desktop/computernetwork/server/json.hpp
+/home/andrei/Desktop/ProjectCN/server/json.hpp
 algorithm
 -
 cassert
@@ -300,7 +300,7 @@ vector
 utility
 -
 
-/home/andrei/Desktop/computernetwork/server/main.cpp
+/home/andrei/Desktop/ProjectCN/server/main.cpp
 sys/types.h
 -
 sys/socket.h
@@ -325,10 +325,10 @@ iostream
 -
 fstream
 -
-../Communication/CommunicationHelper.h
-/home/andrei/Desktop/computernetwork/Communication/CommunicationHelper.h
+../Tools/Write&Read.h
+/home/andrei/Desktop/ProjectCN/Tools/Write&Read.h
 json.hpp
-/home/andrei/Desktop/computernetwork/server/json.hpp
+/home/andrei/Desktop/ProjectCN/server/json.hpp
 fstream
 -
 iomanip

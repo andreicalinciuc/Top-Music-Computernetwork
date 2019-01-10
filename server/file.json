@@ -8,116 +8,120 @@
     ],
     "songs": [
         {
-            "descriere": "aha",
+            "  comentariu": "-",
+            "descriere": "fain",
             "genuri": {
                 "gen": [
-                    "manele",
-                    "viata",
-                    "toate"
+                    "gen1"
                 ]
             },
-            "link": "da",
-            "name": "susanu",
+            "link": "este",
+            "name": "melodie1",
+            "numar de voturi": 0
+        },
+        {
+            "  comentariu": "-",
+            "descriere": "fain",
+            "genuri": {
+                "gen": [
+                    "gen1",
+                    "gen2",
+                    "gen3",
+                    "gen4",
+                    "gen5"
+                ]
+            },
+            "link": "este",
+            "name": "melodie2",
+            "numar de voturi": 1
+        },
+        {
+            "  comentariu": "-",
+            "descriere": "da",
+            "genuri": {
+                "gen": [
+                    "gen2"
+                ]
+            },
+            "link": "este",
+            "name": "melodie3",
+            "numar de voturi": 0
+        },
+        {
+            "  comentariu": "-",
+            "descriere": "este",
+            "genuri": {
+                "gen": [
+                    "manea"
+                ]
+            },
+            "link": "https://www.youtube.com/watch?v=mEf4tgUxDMo&list=RDRFpKwqEhJoM&index=27 ",
+            "name": "Carmen de la Salciua - Mama unde esti te strig (oficial video) 2018",
+            "numar de voturi": 0
+        },
+        {
+            "  comentariu": "-",
+            "descriere": "Toate drepturile rezervate! Nu copiati și repostați acest clip pe alte canale! Dacă va place distribuiti-l pe Facebook sau pe oricare alt site! Contact Carmen de la Salciua, Culita si Formatia 0786 925 563 (daca nu raspundem lasati un mesaj si veti fi sunati) Contact MIHAI GHEBAN 0741 756 372 ",
+            "genuri": {
+                "gen": [
+                    "manea"
+                ]
+            },
+            "link": "https://www.youtube.com/watch?v=pGiA7N99JKw&index=27&list=RDRFpKwqEhJoM ",
+            "name": "Carmen de la Salciua, Culita Sterp si Mihai Gheban - Banii sau iubirea OFICIAL VIDEO NOU 2018",
+            "numar de voturi": 0
+        },
+        {
+            "  comentariu": "-",
+            "descriere": "Vali Vijelie si Play AJ - Asa suntem noi barbatii P & C AMMA Music & Sound http://www.amma.ro Administrat de PLAYONE Media Pe acest canal gasiti cele mai tari melodii ale casei de discuri AMMA, hituri din istoria manelelor hit de hit cu Florin Salam, Nicolae Guta, Denisa, Brandy, Jean de la Craiova si multi alti precum Liviu Guta si Liviu Pustiu Claudia Nek Demarco. Aici poti descarca si asculta online gratis cele mai tari manele si cele mai noi si cele mai vechi manele cu Sorin Copilul de Aur, Sorinel Pustiu, Vali Vijelie, Adrian Copilul Minune, Adrian Minune, Babi Minune, Narcisa si multi alti. Vizionare si auditie placuta!",
+            "genuri": {
+                "gen": [
+                    "manea"
+                ]
+            },
+            "link": "https://www.youtube.com/watch?v=FzBOXgtGymk&index=27&list=RDRFpKwqEhJoM ",
+            "name": "Vali Vijelie si Play AJ - Asa suntem noi barbatii",
+            "numar de voturi": 1
+        },
+        {
+            "comentariu": [
+                "fain",
+                "frumos tare",
+                "imi place viataaaaa"
+            ],
+            "descriere": "Pentru evenimente cu Dani Mocanu sunati sau lasati un mesaj la +40755310803 Video by Mirea Studio Abonați-vă la singurul meu canal oficial pentru noutăți Toate drepturile rezervate artistului © Dani Mocanu Booking & Licensing : contact@danimocanu.com Atenție ! acestea sunt singurele conturi oficiale de Facebook FB personal https://www.facebook.com/danielmocanu... FB page https://www.facebook.com/DanielMocanu... Abonați-vă http://www.youtube.com/danimocanuoficial Viata cu Dani Mocanu https://goo.gl/AjmB7q Canal administrat de KLU NETWORK România În atenția celor care reuploadează videoclipurile cu Dani Mocanu sau folosesc melodiile fară aprobarea artitului , orice marterial va fi blocat sau raportat catre youtube sau facebook , dacă ești fan adevărat dă share melodiilor încărcate de pe acest cont , adaugă-ți melodia la favorite sau creează-ți propiul tău playlist , în caz contrat riscați suspendarea contului , vă mulțumim pentru înțelegere !",
+            "genuri": {
+                "gen": [
+                    "manea"
+                ]
+            },
+            "link": "https://www.youtube.com/watch?v=we7vrIOdoHU&fbclid=IwAR1Jj9A5U2sUkOK0tn-A6PgFyxWJ-SsTAKDYR-OApa-vDz_Hw_nz9soiqt0 ",
+            "name": "Dani Mocanu - Nu Comenteaza Nimeni La Mine (pentru Costel Corduneanu) 2019",
             "numar de voturi": 3
         },
         {
-            "descriere": "de",
+            "  comentariu": "-",
+            "descriere": "Cik pogodi",
             "genuri": {
                 "gen": [
-                    "da"
+                    "manea"
                 ]
             },
-            "link": "da",
-            "name": "da",
-            "numar de voturi": 9
-        },
-        {
-            "comentarii": "-",
-            "descriere": "macarenaaaaaaaaaaa",
-            "genuri": {
-                "gen": [
-                    "macarena"
-                ]
-            },
-            "link": "da",
-            "name": "macarena",
-            "numar de voturi": 10
-        },
-        {
-            "comentarii": "-",
-            "descriere": "faina",
-            "genuri": {
-                "gen": [
-                    "populara",
-                    "traditonala"
-                ]
-            },
-            "link": "da",
-            "name": "brasoveanca",
-            "numar de voturi": 0
-        },
-        {
-            "comentarii": "-",
-            "descriere": "dsasd",
-            "link": "dasasd",
-            "name": "deas",
-            "numar de voturi": 0
-        },
-        {
-            "comentarii": "-",
-            "descriere": "sdasda",
-            "link": "dsadsaasd",
-            "name": "madassad",
-            "numar de voturi": 0
-        },
-        {
-            "comentarii": "-",
-            "descriere": "assda",
-            "link": "asdsad",
-            "name": "asdsa",
-            "numar de voturi": 0
+            "link": "https://www.youtube.com/watch?v=XBPXkc_jj0U&fbclid=IwAR0_Jk7mfuE5RhUYNmtkKeuOLX5Ld4GJm_ww8jFVP8nwcYDmHW-3AUjtI0g&app=desktop ",
+            "name": "Lepa brena - Cik cik pogodi balkan beat remix",
+            "numar de voturi": 1
         }
     ],
     "users": [
         {
             "drept de vot": 1,
-            "name": "dadassda",
-            "pass": "dasdsadas"
-        },
-        {
-            "drept de vot": 1,
-            "name": "user",
+            "name": "user2",
             "pass": "user"
         },
         {
             "drept de vot": 1,
-            "name": "dar",
-            "pass": "dar"
-        },
-        {
-            "drept de vot": 1,
-            "name": "nic",
-            "pass": "noce"
-        },
-        {
-            "drept de vot": 1,
-            "name": "bixi",
-            "pass": "bum"
-        },
-        {
-            "drept de vot": 1,
-            "name": "bixos",
-            "pass": "bids"
-        },
-        {
-            "drept de vot": 1,
-            "name": "1",
+            "name": "user3",
             "pass": "user"
-        },
-        {
-            "drept de vot": 1,
-            "name": "1",
-            "pass": "1"
         }
     ]
 }
